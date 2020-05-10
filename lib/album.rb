@@ -30,8 +30,8 @@ class Album
     @@albums[self.id] = Album.new(self.name, self.id)
   end
   
-  def self.find(name)
-  end
+  # def self.find(name)
+  # end
 
   def ==(album_to_compare)
     self.name() == album_to_compare.name()
