@@ -5,8 +5,8 @@
 <% if @albums.any? %>
   <ul>
     <% @albums.each do |album| %>
-      <li><%= album.name %></li>
-    <% end %>
+    <li><a href="/albums/<%= album.id %>"><%= album.name %></a></li>
+  <% end %>
   </ul>
 <% else %>
   <p>There are currently no records to display.</p>
@@ -22,3 +22,7 @@
   </div>
   <button type="submit" class="btn">Go!</button>
 </form>
+
+
+
+ 
