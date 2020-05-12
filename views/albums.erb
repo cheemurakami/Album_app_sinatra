@@ -5,7 +5,7 @@
 <% if @albums.any? %>
   <ul>
     <% @albums.each do |album| %>
-    <li><a href="/albums/<%= album.id %>"><%= album.name %></a></li>
+    <li><a href="/albums/<%= album.id %>"><%= album.name %> <%= album.year %> <%= album.genre %> <%= album.artist %></a></li>
   <% end %>
   </ul>
 <% else %>
