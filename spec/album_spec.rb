@@ -29,13 +29,13 @@ describe ('#Album') do
     end
   end
  
-  describe('#==') do
-    it("is the same album if it has the same attributes as another album") do
-      album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
-      album2 = Album.new("kiwis best hits", nil, 2021, "neko", "kiwi")
-      expect(album).to(eq(album2))
-    end
-  end
+  # describe('#==') do
+  #   it("is the same album if it has the same attributes as another album") do
+  #     album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
+  #     album2 = Album.new("kiwis best hits", nil, 2021, "neko", "kiwi")
+  #     expect(album).to(eq(album2))
+  #   end
+  # end
 
   describe('.clear') do
     it("clears all albums") do
@@ -75,6 +75,19 @@ describe ('#Album') do
       album2.save()
       album.delete()
       expect(Album.all).to(eq([album2]))
+    end
+  end
+
+  describe('.search') do
+    it("searches an album by name") do
+      album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
+      album.save()
+      album2 = Album.new("kiwis other best hits", nil, 2021, "neko", "kiwi")
+      album2.save()
+      album3 = Album.new("chi's other best hits", nil, 2020, "human", "chi")
+      album3.save()
+      # expect(Album.search(album.name)).to(eq(album))
+      expect(Album.search("kiwi")).to(eq([album, album2]))
     end
   end
 

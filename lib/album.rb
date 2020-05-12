@@ -10,9 +10,10 @@ class Album
     @year = year.to_i
     @genre = genre
     @artist = artist
+  end 
   
   def self.all
-    @@albums.values() #hash method
+    @@albums.values() #hash method -> array
   end
   # Album.all
 
@@ -24,15 +25,19 @@ class Album
   end
 
   def save
-    @@albums[self.id] = Album.new(self.name, self.id, self.year, self.genre, self.artist)
+    @@albums[self.id] = self
   end
+
+  # def save
+  #   @@albums[self.id] = Album.new(self.name, self.id, self.year, self.genre, self.artist)
+  # end
   
   # def self.find(name)
   # end
 
-  def ==(album_to_compare)
-    self.name() == album_to_compare.name()
-  end
+  # def ==(album_to_compare)
+  #   self.name() == album_to_compare.name()
+  # end
 
   def self.clear
     @@albums = {}
@@ -51,6 +56,11 @@ class Album
 
   def delete
     @@albums.delete(self.id)
+  end
+
+  def self.search(name)
+     
+    self.all.select{| album | album.name.include?(name)}
   end
 
 end
