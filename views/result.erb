@@ -1,0 +1,12 @@
+<h2>Results:</h2>
+<% if @searched_albums.any? %>
+  <ul>
+    <% @searched_albums.each do |album| %>
+      <li><a href="/albums/<%= album.id %>"><%= album.name %> <%= album.year %> <%= album.genre %> <%= album.artist %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No albums found.</p>
+<% end %>
+
+<a href="/albums">Return to home</a>

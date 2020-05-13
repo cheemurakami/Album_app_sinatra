@@ -104,7 +104,20 @@ describe ('#Album') do
     end
   end
 
-  describe('.sold') do
+  describe('.sort') do
+    it("sorts albums in alphabetical order") do
+      album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
+      album.save()
+      album2 = Album.new("bee's album", nil, 2021, "human", "bee")
+      album2.save()
+      album3 = Album.new("chi's best hits", nil, 2020, "human", "chi")
+      album3.save()
+      # expect(Album.search(album.name)).to(eq(album))
+      expect(Album.sort.all).to(eq([album2, album3, album]))
+    end
+  end
+
+  describe('#sold') do
     it("lists sold albums") do
       album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
       album.save

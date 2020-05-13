@@ -32,10 +32,19 @@ end
 
 post('/albums') do
   name = params[:album_name] #new_album.erb no input name
-  album = Album.new(name, nil)
+  year = params[:album_year]
+  genre = params[:album_genre]
+  artist = params[:album_artist]
+  album = Album.new(name, nil, year, genre, artist)
   album.save()
   @albums = Album.all()
   erb(:albums)
+end
+
+post('/albums/results') do
+ searched_words = params[:search]
+ @searched_albums = Album.search(searched_words)
+ erb(:result)
 end
 
 get('/albums/:id/edit') do
