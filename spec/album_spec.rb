@@ -1,6 +1,7 @@
 require 'rspec'
 require 'pry'
 require 'album'
+require 'song'
 
 describe ('#Album') do
 
@@ -113,7 +114,7 @@ describe ('#Album') do
       album3 = Album.new("chi's best hits", nil, 2020, "human", "chi")
       album3.save()
       # expect(Album.search(album.name)).to(eq(album))
-      expect(Album.sort.all).to(eq([album2, album3, album]))
+      expect(Album.sort).to(eq([album2, album3, album]))
     end
   end
 
@@ -128,5 +129,15 @@ describe ('#Album') do
       expect(Album.all).to(eq([album2]))
     end
   end
-
+  describe('#songs') do
+    it("returns an album's songs") do
+      album = Album.new("Giant Steps", nil, 2000, "pop", "chee")
+      album.save()
+      song = Song.new("Naima", album.id, nil)
+      song.save()
+      song2 = Song.new("Cousin Mary", album.id, nil)
+      song2.save()
+      expect(album.songs).to(eq([song, song2]))
+    end
+  end
 end

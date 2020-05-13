@@ -79,4 +79,7 @@ class Album
     self.all.sort_by{| album | album.name }
   end
 
+  def songs
+    Song.find_by_album(self.id)
+  end
 end
