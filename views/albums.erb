@@ -8,11 +8,12 @@
     <li><a href="/albums/<%= album.id %>"><%= album.name %> <%= album.year %> <%= album.genre %> <%= album.artist %></a></li>
   <% end %>
   </ul>
+  <p><a href="/albums?sorted=true">Sort by alphabetically</a></p>
 <% else %>
   <p>There are currently no records to display.</p>
 <% end %>
 
-<a href="/albums/new">Add a new album</a>
+<h4><a href="/albums/new">Add a new album</a></h4>
 
 
 <form action="/albums/results" method="post">
