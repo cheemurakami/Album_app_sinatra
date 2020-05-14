@@ -16,15 +16,16 @@ describe ('#Album') do
   end
 
   it('creates a new album') do
-    album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
+    album = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
     expect(album.year).to eq(2020)
+    
   end
   
   describe('#save') do
     it("saves an album") do
-      album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi") # nil added as second argument
+      album = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"}) # nil added as second argument
       album.save()
-      album2 = Album.new("kiwis other best hits", nil, 2021, "neko", "kiwi") # nil added as second argument
+      album2 = Album.new({:name => "kiwis other best hits", :id => nil, :year => 2021, :genre => "neko", :artist => "kiwi"}) # nil added as second argument
       album2.save()
       expect(Album.all).to(eq([album, album2]))
     end
@@ -40,9 +41,9 @@ describe ('#Album') do
 
   describe('.clear') do
     it("clears all albums") do
-      album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
+      album = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
       album.save()
-      album2 = Album.new("kiwis other best hits", nil, 2021, "neko", "kiwi")
+      album2 = Album.new({:name => "kiwis other best hits", :id => nil, :year => 2021, :genre => "neko", :artist => "kiwi"})
       album2.save()
       Album.clear()
       expect(Album.all).to(eq([]))
@@ -51,9 +52,9 @@ describe ('#Album') do
 
   describe('.find') do
     it("finds an album by id") do
-      album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
+      album = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
       album.save()
-      album2 = Album.new("kiwis other best hits", nil, 2021, "neko", "kiwi")
+      album2 = Album.new({:name => "kiwis other best hits", :id => nil, :year => 2021, :genre => "neko", :artist => "kiwi"})
       album2.save()
       expect(Album.find(album.id)).to(eq(album))
     end
@@ -61,7 +62,7 @@ describe ('#Album') do
 
   describe('#update') do
     it("updates an album by id") do
-      album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
+      album = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
       album.save()
       album.update("A Love Supreme")
       expect(album.name).to(eq("A Love Supreme"))
@@ -70,9 +71,9 @@ describe ('#Album') do
 
   describe('#delete') do
     it("deletes an album by id") do
-      album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
+      album = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
       album.save()
-      album2 = Album.new("kiwis other best hits", nil, 2021, "neko", "kiwi")
+      album2 = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
       album2.save()
       album.delete()
       expect(Album.all).to(eq([album2]))
@@ -81,11 +82,11 @@ describe ('#Album') do
 
   describe('.search') do
     it("searches an album by name") do
-      album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
+      album = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
       album.save()
-      album2 = Album.new("kiwis other best hits", nil, 2021, "neko", "kiwi")
+      album2 = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
       album2.save()
-      album3 = Album.new("chi's other best hits", nil, 2020, "human", "chi")
+      album3 = Album.new({:name => "chi's other best hits", :id => nil, :year => 2020, :genre => "human", :artist => "chi"})
       album3.save()
       # expect(Album.search(album.name)).to(eq(album))
       expect(Album.search("kiwi")).to(eq([album, album2]))
@@ -94,44 +95,33 @@ describe ('#Album') do
 
   describe('.sort') do
     it("sorts albums in alphabetical order") do
-      album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
+      album = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
       album.save()
-      album2 = Album.new("bee's album", nil, 2021, "human", "bee")
+      album2 = Album.new({:name => "kiwis new hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
       album2.save()
-      album3 = Album.new("chi's best hits", nil, 2020, "human", "chi")
+      album3 = Album.new({:name => "chi's other best hits", :id => nil, :year => 2020, :genre => "human", :artist => "chi"})
       album3.save()
       # expect(Album.search(album.name)).to(eq(album))
-      expect(Album.sort).to(eq([album2, album3, album]))
-    end
-  end
-
-  describe('.sort') do
-    it("sorts albums in alphabetical order") do
-      album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
-      album.save()
-      album2 = Album.new("bee's album", nil, 2021, "human", "bee")
-      album2.save()
-      album3 = Album.new("chi's best hits", nil, 2020, "human", "chi")
-      album3.save()
-      # expect(Album.search(album.name)).to(eq(album))
-      expect(Album.sort).to(eq([album2, album3, album]))
+      expect(Album.sort).to(eq([album3, album, album2]))
     end
   end
 
   describe('#sold') do
     it("lists sold albums") do
-      album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
-      album.save
-      album2 = Album.new("bee's album", nil, 2021, "human", "bee")
+      album = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
+      album.save()
+      album2 = Album.new({:name => "kiwis new hits", :id => nil, :year => 2010, :genre => "neko", :artist => "kiwi"})
       album2.save()
+      album3 = Album.new({:name => "chi's other best hits", :id => nil, :year => 2020, :genre => "human", :artist => "chi"})
+      album3.save()
       album.sold #also moves into @@sold_albums
       expect(Album.sold_all).to(eq([album]))
-      expect(Album.all).to(eq([album2]))
+      expect(Album.all).to(eq([album2, album3]))
     end
   end
   describe('#songs') do
     it("returns an album's songs") do
-      album = Album.new("Giant Steps", nil, 2000, "pop", "chee")
+      album = Album.new({:name => "Giant Steps", :id => nil, :year => 2000, :genre => "pop", :artist => "chee"})
       album.save()
       song = Song.new("Naima", album.id, nil)
       song.save()

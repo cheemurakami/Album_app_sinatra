@@ -18,7 +18,7 @@ end
 
 describe('create a song path', {:type => :feature}) do
   it('creates an album and then goes to the album page') do
-    album = Album.new("Yellow Submarine", nil, 2000, 'pop','kiwi')
+    album = Album.new({:name => "Yellow Submarine", :id  => nil, :year => 2000, :genre => 'pop',:artist => 'kiwi'})
     album.save
     visit("/albums/#{album.id}")
     fill_in('song_name', :with => 'All You Need Is Love')

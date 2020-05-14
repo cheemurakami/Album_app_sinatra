@@ -8,7 +8,7 @@ describe '#Song' do
   before(:each) do
     Album.clear()
     Song.clear()
-    @album = Album.new("Giant Steps", nil, 2000, "pop", "chee")
+    @album = Album.new({:name => "Giant Steps", :id => nil, :year => 2000, :genre => "pop", :artist => "chee"})
     @album.save()
   end
 
@@ -81,7 +81,7 @@ describe '#Song' do
 
   describe('.find_by_album') do
     it("finds songs for an album") do
-      album2 = Album.new("Blue", nil, 2000, "pop", "kiwi")
+      album2 = Album.new({:name => "Blue", :id => nil, :year => 2000, :genre => "pop", :artist => "kiwi"})
       album2.save
       song = Song.new("Naima", @album.id, nil)
       song.save()

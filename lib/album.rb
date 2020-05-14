@@ -5,12 +5,21 @@ class Album
   @@total_rows = 0
   @@sold_albums = {}
 
-  def initialize (name, id, year, genre, artist)
-    @name = name   
-    @id = id || @@total_rows += 1
-    @year = year.to_i
-    @genre = genre
-    @artist = artist
+  # def initialize (name, id, year, genre, artist)
+  #   @name = name   
+  #   @id = id || @@total_rows += 1
+  #   @year = year.to_i
+  #   @genre = genre
+  #   @artist = artist
+  #   @purchased = false
+  # end 
+
+  def initialize (attributes)
+    @name = attributes.fetch(:name)   
+    @id = attributes.fetch(:id) || @@total_rows += 1
+    @year = attributes.fetch(:year).to_i
+    @genre = attributes.fetch(:genre)
+    @artist = attributes.fetch(:artist)
     @purchased = false
   end 
   
