@@ -1,0 +1,14 @@
+<h2>Purchased Albums</h2>
+
+    <% if @sold_albums %>
+      <ul>
+        <% @sold_albums.each do |album| %>
+          <li><a href="/albums/<%= album.id %>"><%= album.name %></a></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>There are no albums in your cart.</p>
+    <% end %>
+
+    <p><a href="/albums">Return to album list</a></p>
+ 

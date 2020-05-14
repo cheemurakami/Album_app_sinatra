@@ -11,6 +11,7 @@ class Album
     @year = year.to_i
     @genre = genre
     @artist = artist
+    @purchased = false
   end 
   
   def self.all

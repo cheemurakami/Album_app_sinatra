@@ -2,6 +2,7 @@ require("sinatra")
 require('sinatra/reloader')
 require('./lib/album')
 require('pry')
+require('./lib/song')
 also_reload('lib/**/*.rb')
 
 get('/test') do
@@ -32,6 +33,10 @@ patch('/albums/:id') do
   @album.update(params[:name])
   @albums = Album.all
   erb(:album)
+end
+
+get('/albums/wishlist') do
+
 end
 
 post('/albums') do
@@ -75,11 +80,19 @@ delete('/albums/:id') do
   erb(:albums)
 end
 
+
+patch('/albums/:id/buy') do
+  @album = Album.find(params[:id].to_i())
+  @album.sold
+  @sold_albums = Album.sold_all
+  erb(:purchased)
+end
+
 get('/custom_route') do
   "We can even create custom routes, but we should only do this when needed."
 end
 
-require('./lib/song')
+
 
 # Get the detail for a specific song such as lyrics and songwriters.
 get('/albums/:id/songs/:song_id') do
