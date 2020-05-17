@@ -1,10 +1,6 @@
 class Album
   attr_accessor(:id, :name, :year, :genre, :artist)
 
-  # @@album = {} #hash
-  # @@total_rows = 0
-  # @@sold_albums = {}
-
   def initialize (attributes)
     @name = attributes.fetch(:name)   
     @id = attributes.fetch(:id)
