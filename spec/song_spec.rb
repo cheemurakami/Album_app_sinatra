@@ -1,13 +1,14 @@
-require 'rspec'
-require 'song'
-require 'album'
-require 'pry'
+require('spec_helper')
+# require 'rspec'
+# require 'song'
+# require 'album'
+# require 'pry'
 
 describe '#Song' do
 
   before(:each) do
-    Album.clear()
-    Song.clear()
+    # Album.clear()
+    # Song.clear()
     @album = Album.new({:name => "Giant Steps", :id => nil, :year => 2000, :genre => "pop", :artist => "chee"})
     @album.save()
   end

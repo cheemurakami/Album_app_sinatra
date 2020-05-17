@@ -1,13 +1,14 @@
-require 'rspec'
-require 'pry'
-require 'album'
-require 'song'
+require('spec_helper')
+# require 'rspec'
+# require 'pry'
+# require 'album'
+# require 'song'
 
 describe ('#Album') do
 
-  before(:each) do
-    Album.clear()
-  end
+  # before(:each) do
+  #   Album.clear()
+  # end
 
   describe('.all') do
     it ("returns an empty array when there are no albums") do
@@ -86,7 +87,7 @@ describe ('#Album') do
       album.save()
       album2 = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
       album2.save()
-      album3 = Album.new({:name => "chi's other best hits", :id => nil, :year => 2020, :genre => "human", :artist => "chi"})
+      album3 = Album.new({:name => "chis other best hits", :id => nil, :year => 2020, :genre => "human", :artist => "chi"})
       album3.save()
       # expect(Album.search(album.name)).to(eq(album))
       expect(Album.search("kiwi")).to(eq([album, album2]))
@@ -99,7 +100,7 @@ describe ('#Album') do
       album.save()
       album2 = Album.new({:name => "kiwis new hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
       album2.save()
-      album3 = Album.new({:name => "chi's other best hits", :id => nil, :year => 2020, :genre => "human", :artist => "chi"})
+      album3 = Album.new({:name => "chis other best hits", :id => nil, :year => 2020, :genre => "human", :artist => "chi"})
       album3.save()
       # expect(Album.search(album.name)).to(eq(album))
       expect(Album.sort).to(eq([album3, album, album2]))
@@ -112,7 +113,7 @@ describe ('#Album') do
       album.save()
       album2 = Album.new({:name => "kiwis new hits", :id => nil, :year => 2010, :genre => "neko", :artist => "kiwi"})
       album2.save()
-      album3 = Album.new({:name => "chi's other best hits", :id => nil, :year => 2020, :genre => "human", :artist => "chi"})
+      album3 = Album.new({:name => "chis other best hits", :id => nil, :year => 2020, :genre => "human", :artist => "chi"})
       album3.save()
       album.sold #also moves into @@sold_albums
       expect(Album.sold_all).to(eq([album]))
