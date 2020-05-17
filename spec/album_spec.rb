@@ -1,27 +1,18 @@
 require('spec_helper')
-# require 'rspec'
-# require 'pry'
-# require 'album'
-# require 'song'
 
 describe ('#Album') do
 
-  # before(:each) do
-  #   Album.clear()
-  # end
 
   describe('.all') do
     it ("returns an empty array when there are no albums") do
       expect(Album.all).to eq([])
+    end    
+    it('creates a new album') do
+      album = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
+      expect(album.year).to eq(2020) 
     end
   end
-
-  it('creates a new album') do
-    album = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
-    expect(album.year).to eq(2020)
     
-  end
-  
   describe('#save') do
     it("saves an album") do
       album = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"}) # nil added as second argument
@@ -32,13 +23,6 @@ describe ('#Album') do
     end
   end
  
-  # describe('#==') do
-  #   it("is the same album if it has the same attributes as another album") do
-  #     album = Album.new("kiwis best hits", nil, 2020, "neko", "kiwi")
-  #     album2 = Album.new("kiwis best hits", nil, 2021, "neko", "kiwi")
-  #     expect(album).to(eq(album2))
-  #   end
-  # end
 
   describe('.clear') do
     it("clears all albums") do
@@ -71,13 +55,13 @@ describe ('#Album') do
   end
 
   describe('#delete') do
-    it("deletes an album by id") do
-      album = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
+    it("deletes all songs belonging to a deleted album") do
+      album = Album.new({:name => "A Love Supreme", :id => nil})
       album.save()
-      album2 = Album.new({:name => "kiwis best hits", :id => nil, :year => 2020, :genre => "neko", :artist => "kiwi"})
-      album2.save()
+      song = Song.new({:name => "Naima", :album_id => album.id, :id => nil})
+      song.save()
       album.delete()
-      expect(Album.all).to(eq([album2]))
+      expect(Song.find(song.id)).to(eq(nil))
     end
   end
 
@@ -120,6 +104,7 @@ describe ('#Album') do
       expect(Album.all).to(eq([album2, album3]))
     end
   end
+
   describe('#songs') do
     it("returns an album's songs") do
       album = Album.new({:name => "Giant Steps", :id => nil, :year => 2000, :genre => "pop", :artist => "chee"})
