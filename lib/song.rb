@@ -12,7 +12,11 @@ class Song
   end
 
   def ==(song_to_compare)
+    if song_to_compare != nil
     (self.name() == song_to_compare.name()) && (self.album_id() == song_to_compare.album_id())
+    else 
+      false
+    end
   end
 
   def self.all
@@ -20,8 +24,9 @@ class Song
     returned_songs = DB.exec("SELECT * FROM songs;")
     songs = []
     returned_songs.each() do | song |
-      name = songs.fetch("name")
-      id = songs.fetch("album_id").to_i
+      name = song.fetch("name")
+      album_id = song.fetch("album_id").to_i
+      id = song.fetch("id").to_i
       songs.push(Song.new({:name => name, :album_id => album_id,:id => id}))
     end
     songs
@@ -29,12 +34,20 @@ class Song
 
   def save
     # @@songs[self.id] = Song.new(self.name, self.album_id, self.id)
-    result = DB.exex("INSERT INTO songs (name, album_id) VALUES ('#{@name}', #{@album_id}) RETURNING id;")
-    @id = result.first().fetcj("id").to_i
+    result = DB.exec("INSERT INTO songs (name, album_id) VALUES ('#{@name}', #{@album_id}) RETURNING id;")
+    @id = result.first().fetch("id").to_i
   end
 
   def self.find(id)
-    @@songs[id]
+    song = DB.exec("SELECT * FROM songs WHERE id = #{id};").first
+    if song
+      name = song.fetch("name")
+      album_id = song.fetch("album_id").to_i
+      id = song.fetch("id").to_i
+      Song.new({:name => name, :album_id => album_id, :id => id})
+    else
+      nil
+    end
   end
 
   def update(name, album_id)
@@ -53,24 +66,19 @@ class Song
 
   def self.clear
     # @@songs = {}
-    DB.exex("DELETE FROM songs *;")
+    DB.exec("DELETE FROM songs *;")
   end
 
 
   
   def self.find_by_album(alb_id)
     songs = []
-    # @@songs.values.each do |song|
-    #   if song.album_id == alb_id
-    #     songs.push(song)
-    #   end
     returned_songs = DB.exec("SELECT * FROM songs WHERE album_id = #{alb_id};")
     returned_songs.each() do | song |
       name = song.fetch("name")
       id = song.fetch("id").to_i
       songs.push(Song.new({:name => name, :album_id => alb_id, :id => id}))
     end
-  end
     songs
   end
 

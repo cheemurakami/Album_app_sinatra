@@ -22,15 +22,15 @@ class Album
     albums 
   end
 
-  def self.sold_all
-    @@sold_albums.values() #hash method -> array
-  end
-  # Album.all
+  # def self.sold_all
+  #   @@sold_albums.values() #hash method -> array
+  # end
+  # # Album.all
 
-  def sold
-    delete
-    @@sold_albums[self.id] = self
-  end
+  # def sold
+  #   delete
+  #   @@sold_albums[self.id] = self
+  # end
   
 
   def self.update_all_names(new_name) 
@@ -75,6 +75,7 @@ class Album
   def delete
     #@@albums.delete(self.id) ##kakunin
     DB.exec("DELETE FROM albums WHERE id = #{@id};")
+    DB.exec("DELETE FROM songs WHERE album_id = #{@id};")
   end
 
   def self.search(name)
@@ -82,7 +83,18 @@ class Album
   end
 
   def self.sort
-    self.all.sort_by{| album | album.name }
+    # self.all.sort_by{| album | album.name }
+    sorted_albums = DB.exec("SELECT * FROM albums ORDER BY name")
+    albums = []
+    sorted_albums.each() do | album |
+      name = album.fetch("name")
+      id = album.fetch("id")
+      year = album.fetch("year").to_i
+      genre = album.fetch("genre")
+      artist = album.fetch("artist")
+      albums.push(Album.new({:name => name, :id => id, :year => year, :genre => genre, :artist => artist}))
+    end
+    albums
   end
 
   def songs

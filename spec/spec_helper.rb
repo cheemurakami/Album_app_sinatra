@@ -3,6 +3,7 @@ require 'pg'
 require 'album'
 require 'song'
 require 'pry'
+require 'artist'
 
 #shared code for clearing tests between runs and connecting to the DB will also go here.
 
