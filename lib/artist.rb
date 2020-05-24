@@ -11,7 +11,7 @@ class Artist
     if (attributes.has_key?(:name)) && (attributes.fetch(:name) != nil)
       @name = attributes.fetch(:name)
       DB.exec("UPDATE artists SET name = '#{@name}' WHERE id = #{@id};")
-    elsif should_create_link(attributes)
+    elsif  (attributes.has_key?(:album_name)) && (attributes.fetch(:album_name) != nil)
       album_name = attributes.fetch(:album_name)
       album = DB.exec("SELECT * FROM albums WHERE lower(name)='#{album_name.downcase}';").first
       # {"id" => 2, "name" => ""A Love Supreme"}
@@ -23,15 +23,14 @@ class Artist
   end
 
 
-  def should_create_link(attributes)
-    #checking to see if it looks like {:album_name => "A Love Supreme"}
-    (attributes.has_key?(:album_name)) && (attributes.fetch(:album_name) != nil)
-  end
+  # def should_create_link(attributes)
+  #   #checking to see if it looks like {:album_name => "A Love Supreme"}
+  #   (attributes.has_key?(:album_name)) && (attributes.fetch(:album_name) != nil)
+  # end
 
   def albums
     albums = []
     results = DB.exec("SELECT album_id FROM albums_artists WHERE artist_id = #{@id};")
-
     #[
     # {album_id: 2},
     # {album_id: 3},
@@ -42,7 +41,10 @@ class Artist
       album = DB.exec("SELECT * FROM albums WHERE id = #{album_id};")
       #[{id:2, name: "Kiwi album", year: "2000" ...}]
       name = album.first().fetch("name")
-      albums.push(Album.new({:name => name, :id => album_id}))
+      year = album.first().fetch("year").to_i
+      genre = album.first().fetch("genre")
+      artist = album.first().fetch("artist")
+      albums.push(Album.new({:name => name, :id => album_id, :year => year, :genre => genre, :artist => artist}))
     end
     albums
   end
@@ -57,6 +59,8 @@ class Artist
     @id = result.first().fetch("id").to_i
   end
 
+
+  
   def self.all
     returned_artists = DB.exec("SELECT * FROM artists;")
     artists = []
@@ -68,7 +72,7 @@ class Artist
     artists
   end
   
-  def clear
+  def self.clear
     DB.exec("DELETE FROM artists *;")
   end
 

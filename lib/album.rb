@@ -17,7 +17,10 @@ class Album
     returned_albums.each() do | album | #album is a hash
       name = album.fetch("name")
       id = album.fetch("id").to_i
-      albums.push(Album.new({:name => name, :id => id}))
+      year = album.fetch("year").to_i
+      genre = album.fetch("genre").to_i
+      artist = album.fetch("artist").to_i
+      albums.push(Album.new({:name => name, :id => id, :year => year, :genre => genre, :artist => artist}))
     end
     albums 
   end
@@ -41,7 +44,7 @@ class Album
 
   def save
     #@@albums[self.id] = self
-    result = DB.exec("INSERT INTO albums (name) VALUES ('#{@name}') RETURNING id;")
+    result = DB.exec("INSERT INTO albums (name, year, genre, artist) VALUES ('#{@name}','#{@year}', '#{@genre}', '#{@artist}')RETURNING id;")
     @id = result.first().fetch("id").to_i #.first returns the first (and only) result of this query.
   end
 
@@ -64,7 +67,10 @@ class Album
     album = DB.exec("SELECT * FROM albums WHERE id = #{id};").first #.first returns the first (and only) result of this query.
     name = album.fetch("name")
     id = album.fetch("id").to_i
-    Album.new({:name => name, :id => id})
+    year = album.fetch("year").to_i
+    genre = album.fetch("genre")
+    artist = album.fetch("artist")
+    Album.new({:name => name, :id => id, :year => year, :genre => genre, :artist => artist})
   end
 
   def update(name)
